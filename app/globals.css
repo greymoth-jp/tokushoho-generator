@@ -1,26 +1,213 @@
 @import "tailwindcss";
 
+/* ─── Kanpou Design System ─────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink:         #0D0D0D;
+  --ink-soft:    #2A2A2A;
+  --paper:       #F5F0E8;
+  --paper-deep:  #EDE8DC;
+  --paper-card:  #F9F5ED;
+  --hanko:       #C0392B;
+  --hanko-deep:  #922B21;
+  --hanko-light: #FDECEA;
+  --rule:        #0D0D0D;
+  --rule-light:  #C8C2B4;
+  --muted:       #6B6560;
+  --muted-light: #9A948E;
+  --white:       #FFFFFF;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-playfair);
+  --font-serif:   var(--font-noto-serif-jp);
+  --font-mono:    var(--font-jetbrains);
+  --color-ink:         var(--ink);
+  --color-paper:       var(--paper);
+  --color-paper-deep:  var(--paper-deep);
+  --color-hanko:       var(--hanko);
+  --color-hanko-deep:  var(--hanko-deep);
+  --color-hanko-light: var(--hanko-light);
+  --color-rule:        var(--rule);
+  --color-rule-light:  var(--rule-light);
+  --color-muted:       var(--muted);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ─── Base ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-noto-serif-jp), "Noto Serif JP", Georgia, serif;
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Typography utilities ──────────────────────────────────────────────── */
+.font-display { font-family: var(--font-playfair), "Playfair Display", Georgia, serif; }
+.font-serif   { font-family: var(--font-noto-serif-jp), "Noto Serif JP", Georgia, serif; }
+.font-mono    { font-family: var(--font-jetbrains), "JetBrains Mono", monospace; }
+
+/* ─── Kanpou rule utilities ─────────────────────────────────────────────── */
+.rule-top    { border-top: 2px solid var(--rule); }
+.rule-bottom { border-bottom: 1px solid var(--rule-light); }
+.rule-v      { border-left: 2px solid var(--rule); }
+
+/* ─── Hanko stamp SVG animation ─────────────────────────────────────────── */
+@keyframes stampIn {
+  0%   { transform: scale(1.4) rotate(-8deg); opacity: 0; }
+  60%  { transform: scale(0.92) rotate(2deg); opacity: 1; }
+  80%  { transform: scale(1.04) rotate(-1deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.stamp-animate {
+  animation: stampIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ─── Form field focus ──────────────────────────────────────────────────── */
+.kanpou-input {
+  background: var(--paper-card);
+  border: 1px solid var(--rule-light);
+  border-left: 3px solid var(--rule-light);
+  color: var(--ink);
+  font-family: var(--font-noto-serif-jp), serif;
+  font-size: 14px;
+  padding: 8px 10px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s ease;
+  resize: vertical;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.kanpou-input::placeholder {
+  color: var(--muted-light);
+  font-style: italic;
+  font-size: 12.5px;
+}
+
+.kanpou-input:focus {
+  border-left-color: var(--hanko);
+  border-color: var(--rule);
+  border-left-color: var(--hanko);
+  background: var(--white);
+}
+
+/* ─── Buttons ───────────────────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  border-radius: 0;
+}
+
+.btn-primary:hover {
+  background: var(--hanko);
+  border-color: var(--hanko);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: 1px solid var(--rule-light);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  border-radius: 0;
+}
+
+.btn-ghost:hover {
+  border-color: var(--ink);
+  background: var(--paper-deep);
+}
+
+.btn-copied {
+  background: #166534 !important;
+  border-color: #166534 !important;
+  color: var(--white) !important;
+}
+
+/* ─── Tab buttons ───────────────────────────────────────────────────────── */
+.tab-btn {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid var(--rule-light);
+  cursor: pointer;
+  border-radius: 0;
+  transition: all 0.12s ease;
+}
+
+.tab-btn.active {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+}
+
+.tab-btn:not(.active) {
+  background: var(--paper-card);
+  color: var(--muted);
+}
+
+.tab-btn:not(.active):hover {
+  background: var(--paper-deep);
+  color: var(--ink);
+}
+
+/* ─── Progress dots ─────────────────────────────────────────────────────── */
+.progress-dot {
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--rule-light);
+  display: inline-block;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.progress-dot.filled {
+  background: var(--hanko);
+  border-color: var(--hanko);
+}
+
+/* ─── Accordion / drawer ────────────────────────────────────────────────── */
+.field-explainer {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.25s ease;
+}
+
+.field-explainer.open {
+  max-height: 200px;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--paper-deep); }
+::-webkit-scrollbar-thumb { background: var(--rule-light); }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-soft); }
+
+/* ─── Print ─────────────────────────────────────────────────────────────── */
+@media print {
+  body { background: white; color: black; }
+  .no-print { display: none !important; }
 }

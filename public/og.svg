@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0d0d0d"/>
+  <rect x="60" y="60" width="1080" height="510" rx="4" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+  <text x="600" y="210" font-family="Georgia,serif" font-size="32" fill="#888" text-anchor="middle">特定商取引法に基づく表記</text>
+  <text x="600" y="300" font-family="Georgia,serif" font-size="64" font-weight="700" fill="#f0f0f0" text-anchor="middle">特商法 Generator</text>
+  <text x="600" y="370" font-family="system-ui,-apple-system,sans-serif" font-size="26" fill="#666" text-anchor="middle">Official disclosure page for foreign SaaS in Japan</text>
+  <text x="600" y="430" font-family="system-ui,-apple-system,sans-serif" font-size="22" fill="#444" text-anchor="middle">English UI → Japanese output · 60 seconds · Free</text>
+</svg>
