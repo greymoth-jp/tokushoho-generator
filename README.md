@@ -1,20 +1,20 @@
 # tokushoho-generator
 
-特定商取引法に基づく表記（特商法ページ）を生成するツール。日本で EC や SaaS を運営すると、特商法に基づく表記の掲載が必要になりますが、項目が多く・抜け漏れが起きやすい領域です。フォームに入力すると、必要項目を満たした特商法ページを生成します。
+A generator for the "Tokushoho page" — the legal notice required by Japan's Act on Specified Commercial Transactions (特定商取引法). If you run e-commerce or SaaS in Japan you must publish this notice, but it has many fields and is easy to leave incomplete. Fill in a form and it generates a page that covers the required items.
 
-個人開発者やスモールビジネスが、リリース直前に特商法対応で詰まるのを 10 分で終わらせるためのツールです。
+Built so an indie developer or small business doesn't get stuck on Tokushoho compliance right before launch — done in 10 minutes.
 
-## 何をするか
+## What it does
 
-- 事業者名・所在地・連絡先・販売価格・支払方法・返品ポリシーなどを入力
-- 特商法に必要な項目を満たしたページを生成
-- そのまま自サイトに貼れる形で出力
+- Enter business name, address, contact, price, payment methods, return policy, and so on
+- Generates a page that satisfies the items required by the Act
+- Outputs it ready to paste into your own site
 
-## 技術スタック
+## Stack
 
 - Next.js 15 (App Router) / TypeScript / React / Tailwind CSS
 
-## ローカル実行
+## Run locally
 
 ```bash
 npm install
@@ -22,14 +22,14 @@ npm run dev
 # http://localhost:3000
 ```
 
-## 注意
+## Note
 
-生成物は雛形です。実際の掲載前に、最新の法令と自社の実態に合っているか必ず確認してください（本ツールは法的助言を提供するものではありません）。
+The output is a template. Before you publish it, always confirm it matches the current law and your actual business (this tool does not provide legal advice).
 
-## ライセンス
+## License
 
-個人プロジェクト。利用条件は要相談。
+Personal project. Terms of use: please ask.
 
 ---
 
-> 関連: GEO/AEO チェッカー [geo-checker](https://github.com/greymoth-jp/geo-checker) ／ e-invoicing OSS [zatca-toolkit](https://github.com/greymoth-jp/zatca-toolkit)
+> Related: GEO/AEO checker [geo-checker](https://github.com/greymoth-jp/geo-checker) / e-invoicing OSS [zatca-toolkit](https://github.com/greymoth-jp/zatca-toolkit)
