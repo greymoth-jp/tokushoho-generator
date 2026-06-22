@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# tokushoho-generator
 
-## Getting Started
+特定商取引法に基づく表記（特商法ページ）を生成するツール。日本で EC や SaaS を運営すると、特商法に基づく表記の掲載が必要になりますが、項目が多く・抜け漏れが起きやすい領域です。フォームに入力すると、必要項目を満たした特商法ページを生成します。
 
-First, run the development server:
+個人開発者やスモールビジネスが、リリース直前に特商法対応で詰まるのを 10 分で終わらせるためのツールです。
+
+## 何をするか
+
+- 事業者名・所在地・連絡先・販売価格・支払方法・返品ポリシーなどを入力
+- 特商法に必要な項目を満たしたページを生成
+- そのまま自サイトに貼れる形で出力
+
+## 技術スタック
+
+- Next.js 15 (App Router) / TypeScript / React / Tailwind CSS
+
+## ローカル実行
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 注意
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+生成物は雛形です。実際の掲載前に、最新の法令と自社の実態に合っているか必ず確認してください（本ツールは法的助言を提供するものではありません）。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ライセンス
 
-## Learn More
+個人プロジェクト。利用条件は要相談。
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> 関連: GEO/AEO チェッカー [geo-checker](https://github.com/greymoth-jp/geo-checker) ／ e-invoicing OSS [zatca-toolkit](https://github.com/greymoth-jp/zatca-toolkit)
