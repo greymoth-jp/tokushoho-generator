@@ -201,6 +201,22 @@ const FIELDS: FieldDef[] = [
   },
 ];
 
+/* ─── HTML escaping helpers ─────────────────────────────────────────────── */
+function escHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function safeHref(url: string): string {
+  const trimmed = url.trim();
+  if (/^https?:\/\//i.test(trimmed)) return escHtml(trimmed);
+  return "#";
+}
+
 /* ─── Output generators ──────────────────────────────────────────────────── */
 const today = (): string => {
   const d = new Date();
@@ -240,22 +256,22 @@ function generateJP(f: FormData): string {
   const tableRows = rows
     .map(
       (r) => `    <tr>
-      <th scope="row">${r.label}</th>
-      <td>${r.value.replace(/\n/g, "<br>")}</td>
+      <th scope="row">${escHtml(r.label)}</th>
+      <td>${escHtml(r.value).replace(/\n/g, "<br>")}</td>
     </tr>`
     )
     .join("\n");
 
   const websiteLink = f.websiteUrl
-    ? `<a href="${f.websiteUrl}" rel="noopener">${f.sellerName || "当社サービス"}</a>`
-    : f.sellerName || "当社サービス";
+    ? `<a href="${safeHref(f.websiteUrl)}" rel="noopener">${escHtml(f.sellerName || "当社サービス")}</a>`
+    : escHtml(f.sellerName || "当社サービス");
 
   return `<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>特定商取引法に基づく表記 — ${f.sellerName || "事業者名"}</title>
+  <title>特定商取引法に基づく表記 — ${escHtml(f.sellerName || "事業者名")}</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap');
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -367,7 +383,7 @@ function generateJP(f: FormData): string {
   <div class="container">
     <div class="gazette-label">特定商取引法に基づく表記</div>
     <h1>特定商取引法に基づく表記</h1>
-    <div class="issued-date">発行日：${today()} &nbsp;｜&nbsp; 事業者：${f.sellerName || "（未入力）"}</div>
+    <div class="issued-date">発行日：${today()} &nbsp;｜&nbsp; 事業者：${escHtml(f.sellerName || "（未入力）")}</div>
     <table>
       <tbody>
 ${tableRows}
@@ -408,24 +424,24 @@ function generateBilingual(f: FormData): string {
     .map(
       (r) => `    <tr>
       <th scope="row">
-        <span class="jp-label">${r.jpLabel}</span>
-        <span class="en-label">${r.enLabel}</span>
+        <span class="jp-label">${escHtml(r.jpLabel)}</span>
+        <span class="en-label">${escHtml(r.enLabel)}</span>
       </th>
-      <td>${r.value.replace(/\n/g, "<br>")}</td>
+      <td>${escHtml(r.value).replace(/\n/g, "<br>")}</td>
     </tr>`
     )
     .join("\n");
 
   const websiteLink = f.websiteUrl
-    ? `<a href="${f.websiteUrl}" rel="noopener">${f.sellerName || "Service"}</a>`
-    : f.sellerName || "";
+    ? `<a href="${safeHref(f.websiteUrl)}" rel="noopener">${escHtml(f.sellerName || "Service")}</a>`
+    : escHtml(f.sellerName || "");
 
   return `<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>特定商取引法に基づく表記 — ${f.sellerName || "事業者名"}</title>
+  <title>特定商取引法に基づく表記 — ${escHtml(f.sellerName || "事業者名")}</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap');
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -540,7 +556,7 @@ function generateBilingual(f: FormData): string {
     <div class="gazette-label">特定商取引法に基づく表記</div>
     <h1>特定商取引法に基づく表記</h1>
     <div class="subtitle">Specified Commercial Transactions Act Disclosure — with English annotations</div>
-    <div class="issued-date">発行日：${today()} &nbsp;|&nbsp; Issued: ${todayEn()} &nbsp;|&nbsp; ${f.sellerName || "（未入力）"}</div>
+    <div class="issued-date">発行日：${today()} &nbsp;|&nbsp; Issued: ${todayEn()} &nbsp;|&nbsp; ${escHtml(f.sellerName || "（未入力）")}</div>
     <table>
       <tbody>
 ${tableRows}
@@ -584,7 +600,7 @@ function generatePassport(f: FormData): string {
       (c) =>
         `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid #EDE8DC;font-size:12px;">
           <span style="color:${c.ok ? "#166534" : "#C0392B"};font-weight:700;font-size:13px;">${c.ok ? "✓" : "○"}</span>
-          <span style="color:${c.ok ? "#0D0D0D" : "#6B6560"}">${c.label}</span>
+          <span style="color:${c.ok ? "#0D0D0D" : "#6B6560"}">${escHtml(c.label)}</span>
         </div>`
     )
     .join("");
@@ -674,7 +690,7 @@ function generatePassport(f: FormData): string {
       <text x="32" y="38" text-anchor="middle" font-family="serif" font-size="18" font-weight="700" fill="#C0392B">認</text>
     </svg>
     <div class="pp-label">特商法 Compliance Passport</div>
-    <div class="pp-name">${f.sellerName || "(Business name not entered)"}</div>
+    <div class="pp-name">${escHtml(f.sellerName || "(Business name not entered)")}</div>
     <div class="pp-sub">Japan Market Readiness · ${today()}</div>
     <div class="status-badge">${status} — ${pct}% complete</div>
     <div class="pp-checks">${checkRows}</div>
@@ -729,15 +745,15 @@ function generateDivEmbed(f: FormData): string {
   const tableRows = rows
     .map(
       (r) => `    <tr>
-      <th scope="row">${r.label}</th>
-      <td>${r.value.replace(/\n/g, "<br>")}</td>
+      <th scope="row">${escHtml(r.label)}</th>
+      <td>${escHtml(r.value).replace(/\n/g, "<br>")}</td>
     </tr>`
     )
     .join("\n");
 
   const websiteLink = f.websiteUrl
-    ? `<a href="${f.websiteUrl}" rel="noopener" style="color:#6B6560;text-decoration:none;">${f.sellerName || "当社サービス"}</a>`
-    : f.sellerName || "当社サービス";
+    ? `<a href="${safeHref(f.websiteUrl)}" rel="noopener" style="color:#6B6560;text-decoration:none;">${escHtml(f.sellerName || "当社サービス")}</a>`
+    : escHtml(f.sellerName || "当社サービス");
 
   return `<!-- 特商法 Disclosure Block — paste into your page -->
 <div class="tksh-disclosure">
@@ -758,7 +774,7 @@ function generateDivEmbed(f: FormData): string {
   <div class="tksh-inner">
     <div class="tksh-label">特定商取引法に基づく表記</div>
     <h2>特定商取引法に基づく表記</h2>
-    <div class="tksh-date">発行日：${today()} &nbsp;｜&nbsp; 事業者：${f.sellerName || "（未入力）"}</div>
+    <div class="tksh-date">発行日：${today()} &nbsp;｜&nbsp; 事業者：${escHtml(f.sellerName || "（未入力）")}</div>
     <table class="tksh-table">
       <tbody>
 ${tableRows}
